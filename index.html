@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENB Trade-In Process</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            color: #333;
+            background-color: #f5f9ff;
+        }
+        .container {
+            width: 1280px;
+            min-height: 720px;
+            margin: 0 auto;
+            padding: 0;
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .header {
+            background-color: #19376D;
+            padding: 24px 70px;
+            color: white;
+            position: relative;
+        }
+        .title {
+            font-size: 40px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .content {
+            flex-grow: 1;
+            padding: 40px 70px;
+            position: relative;
+        }
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .section.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .section-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #19376D;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+        }
+        .section-title i {
+            margin-right: 15px;
+            font-size: 36px;
+        }
+        .steps-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            gap: 20px;
+        }
+        .step {
+            flex: 1;
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .step:hover {
+            transform: translateY(-5px);
+        }
+        .step-icon {
+            background-color: #e8f0fe;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .step-icon i {
+            font-size: 40px;
+            color: #19376D;
+        }
+        .step-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #19376D;
+        }
+        .step-description {
+            font-size: 20px;
+            color: #555;
+            line-height: 1.5;
+        }
+        .payment-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            gap: 40px;
+        }
+        .payment-card {
+            flex: 1;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        .cannot-accept {
+            background-color: #ffebee;
+            border-left: 6px solid #d32f2f;
+        }
+        .can-accept {
+            background-color: #e8f5e9;
+            border-left: 6px solid #388e3c;
+        }
+        .payment-icon {
+            background-color: white;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .cannot-accept .payment-icon i {
+            color: #d32f2f;
+            font-size: 48px;
+        }
+        .can-accept .payment-icon i {
+            color: #388e3c;
+            font-size: 48px;
+        }
+        .payment-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .cannot-accept .payment-title {
+            color: #d32f2f;
+        }
+        .can-accept .payment-title {
+            color: #388e3c;
+        }
+        .payment-description {
+            font-size: 20px;
+            line-height: 1.5;
+        }
+        .status-badge {
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            width: 120px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 600;
+            font-size: 18px;
+            border-radius: 20px;
+            color: white;
+        }
+        .cannot-accept .status-badge {
+            background-color: #d32f2f;
+        }
+        .can-accept .status-badge {
+            background-color: #388e3c;
+        }
+        .protocol-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        .protocol-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .protocol-icon {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .protocol-icon i {
+            font-size: 36px;
+            margin-right: 15px;
+        }
+        .protocol-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #19376D;
+        }
+        .protocol-description {
+            font-size: 20px;
+            color: #555;
+            line-height: 1.5;
+        }
+        .required {
+            border-left: 6px solid #19376D;
+        }
+        .required .protocol-icon i {
+            color: #19376D;
+        }
+        .avoid {
+            border-left: 6px solid #d32f2f;
+        }
+        .avoid .protocol-icon i {
+            color: #d32f2f;
+        }
+        .reason {
+            border-left: 6px solid #ff9800;
+        }
+        .reason .protocol-icon i {
+            color: #ff9800;
+        }
+        .solution {
+            border-left: 6px solid #388e3c;
+        }
+        .solution .protocol-icon i {
+            color: #388e3c;
+        }
+        .highlight {
+            font-weight: 600;
+            color: #19376D;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+        .feature-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.2s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        .feature-icon {
+            background-color: #e8f0fe;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .feature-icon i {
+            font-size: 36px;
+            color: #19376D;
+        }
+        .feature-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #19376D;
+        }
+        .important-note {
+            background-color: #ffebee;
+            border-left: 6px solid #d32f2f;
+            padding: 24px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .note-icon {
+            margin-right: 20px;
+        }
+        .note-icon i {
+            color: #d32f2f;
+            font-size: 42px;
+        }
+        .note-text {
+            font-size: 22px;
+            font-weight: 600;
+            color: #d32f2f;
+        }
+        .checks-container {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+        .main-checks {
+            display: flex;
+            justify-content: space-between;
+            gap: 40px;
+        }
+        .check-card {
+            flex: 1;
+            background-color: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        .check-card:hover {
+            transform: translateY(-5px);
+        }
+        .check-icon {
+            background-color: #e8f0fe;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .check-icon i {
+            font-size: 48px;
+            color: #19376D;
+        }
+        .check-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #19376D;
+        }
+        .check-description {
+            font-size: 20px;
+            color: #555;
+            line-height: 1.5;
+        }
+        .note-container {
+            background-color: #e8f5e9;
+            border-left: 6px solid #388e3c;
+            padding: 30px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+        }
+        .note-icon {
+            margin-right: 30px;
+        }
+        .note-icon i {
+            color: #388e3c;
+            font-size: 54px;
+        }
+        .note-content {
+            display: flex;
+            flex-direction: column;
+        }
+        .note-label {
+            font-size: 24px;
+            font-weight: 600;
+            color: #388e3c;
+            margin-bottom: 10px;
+        }
+        .note-text {
+            font-size: 22px;
+            color: #333;
+        }
+        .highlight-green {
+            font-weight: 700;
+            color: #388e3c;
+        }
+        .protocol-cards {
+            display: flex;
+            justify-content: space-between;
+            gap: 50px;
+            margin-top: 40px;
+        }
+        .protocol-card {
+            flex: 1;
+            border-radius: 16px;
+            padding: 50px 40px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            min-height: 300px;
+            transition: transform 0.3s ease;
+        }
+        .protocol-card:hover {
+            transform: translateY(-8px);
+        }
+        .avoid {
+            background-color: #ffebee;
+            border-left: 8px solid #d32f2f;
+        }
+        .instead {
+            background-color: #e8f5e9;
+            border-left: 8px solid #388e3c;
+        }
+        .protocol-icon {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .avoid .protocol-icon {
+            background-color: #ffcdd2;
+        }
+        .instead .protocol-icon {
+            background-color: #c8e6c9;
+        }
+        .avoid .protocol-icon i {
+            color: #d32f2f;
+            font-size: 64px;
+        }
+        .instead .protocol-icon i {
+            color: #388e3c;
+            font-size: 64px;
+        }
+        .protocol-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+        .avoid .protocol-title {
+            color: #d32f2f;
+        }
+        .instead .protocol-title {
+            color: #388e3c;
+        }
+        .protocol-description {
+            font-size: 22px;
+            line-height: 1.6;
+            color: #333;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+        }
+        .highlight-red {
+            font-weight: 700;
+            color: #d32f2f;
+        }
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 70px;
+            background-color: #f5f9ff;
+            border-top: 1px solid #e0e0e0;
+        }
+        .nav-button {
+            background-color: #19376D;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+        .nav-button:hover {
+            background-color: #0d2858;
+        }
+        .nav-button i {
+            margin-right: 8px;
+        }
+        .nav-button.next i {
+            margin-right: 0;
+            margin-left: 8px;
+        }
+        .nav-button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .progress-indicator {
+            display: flex;
+            align-items: center;
+        }
+        .progress-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #cccccc;
+            margin: 0 6px;
+            transition: background-color 0.3s ease;
+        }
+        .progress-dot.active {
+            background-color: #19376D;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">ENB Trade-In Process</h1>
+        </div>
+        
+        <div class="content">
+            <!-- Section 1: Main Process Steps -->
+            <div class="section active" id="section1">
+                <h2 class="section-title">
+                    <i class="fas fa-list-ol"></i>
+                    Main Process Steps
+                </h2>
+                <div class="steps-container">
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3 class="step-title">Approach Customer</h3>
+                        <p class="step-description">Initiate contact and establish rapport with the customer</p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <h3 class="step-title">Give Estimated Price</h3>
+                        <p class="step-description">Provide initial valuation based on device information</p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h3 class="step-title">Do Diagnostic</h3>
+                        <p class="step-description">Perform thorough device diagnostic to customer</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 2: Payment Plan Guidelines -->
+            <div class="section" id="section2">
+                <h2 class="section-title">
+                    <i class="fas fa-credit-card"></i>
+                    Payment Plan Guidelines
+                </h2>
+                <div class="payment-container">
+                    <div class="payment-card cannot-accept">
+                        <div class="status-badge">REJECTED</div>
+                        <div class="payment-icon">
+                            <i class="fas fa-sim-card"></i>
+                        </div>
+                        <h3 class="payment-title">Telco Instalment</h3>
+                        <p class="payment-description">Customer still under telco instalment</p>
+                    </div>
+                    
+                    <div class="payment-card can-accept">
+                        <div class="status-badge">ACCEPTED</div>
+                        <div class="payment-icon">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <h3 class="payment-title">Credit Card Purchase</h3>
+                        <p class="payment-description">Customer purchased under Credit Card</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 3: Front Screen Photo Protocol -->
+            <div class="section" id="section3">
+                <h2 class="section-title">
+                    <i class="fas fa-camera"></i>
+                    Front Screen Photo Protocol
+                </h2>
+                <div class="protocol-container">
+                    <div class="protocol-card required">
+                        <div class="protocol-icon">
+                            <i class="fas fa-camera"></i>
+                            <h3 class="protocol-title">Required</h3>
+                        </div>
+                        <p class="protocol-description">Take photo for <span class="highlight">front screen check</span></p>
+                    </div>
+                    
+                    <div class="protocol-card avoid">
+                        <div class="protocol-icon">
+                            <i class="fas fa-times-circle"></i>
+                            <h3 class="protocol-title">Avoid</h3>
+                        </div>
+                        <p class="protocol-description">Taking from <span class="highlight">IMEI/notes apps/about setting/google</span></p>
+                    </div>
+                    
+                    <div class="protocol-card reason">
+                        <div class="protocol-icon">
+                            <i class="fas fa-question-circle"></i>
+                            <h3 class="protocol-title">Reason</h3>
+                        </div>
+                        <p class="protocol-description">May <span class="highlight">affect price</span> while checking</p>
+                    </div>
+                    
+                    <div class="protocol-card solution">
+                        <div class="protocol-icon">
+                            <i class="fas fa-qrcode"></i>
+                            <h3 class="protocol-title">Solution</h3>
+                        </div>
+                        <p class="protocol-description">Take the front screen photo from <span class="highlight">QR by system generated</span></p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 4: Internal & Physical Check -->
+            <div class="section" id="section4">
+                <h2 class="section-title">
+                    <i class="fas fa-tools"></i>
+                    Internal & Physical Check (New Features)
+                </h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-plug"></i>
+                        </div>
+                        <h3 class="feature-title">Charging Port</h3>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3 class="feature-title">MDM (Management Device)</h3>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-wifi"></i>
+                        </div>
+                        <h3 class="feature-title">Network</h3>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <h3 class="feature-title">Carrier Lock</h3>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-sim-card"></i>
+                        </div>
+                        <h3 class="feature-title">Sim Card Detection</h3>
+                    </div>
+                </div>
+                
+                <div class="important-note">
+                    <div class="note-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <p class="note-text">If clicked YES for any of these features, automatically will be rejected</p>
+                </div>
+            </div>
+            
+            <!-- Section 5: Additional Checks -->
+            <div class="section" id="section5">
+                <h2 class="section-title">
+                    <i class="fas fa-clipboard-check"></i>
+                    Additional Checks
+                </h2>
+                <div class="checks-container">
+                    <div class="main-checks">
+                        <div class="check-card">
+                            <div class="check-icon">
+                                <i class="fas fa-tools"></i>
+                            </div>
+                            <h3 class="check-title">Repair History Check</h3>
+                            <p class="check-description">Examine device repair records to identify previous issues</p>
+                        </div>
+                        
+                        <div class="check-card">
+                            <div class="check-icon">
+                                <i class="fas fa-battery-full"></i>
+                            </div>
+                            <h3 class="check-title">Battery Replacement Check</h3>
+                            <p class="check-description">Verify if battery has been replaced or is original</p>
+                        </div>
+                    </div>
+                    
+                    <div class="note-container">
+                        <div class="note-icon">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        <div class="note-content">
+                            <h3 class="note-label">Important Note</h3>
+                            <p class="note-text"><span class="highlight-green">Bloated battery</span> can be accepted</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 6: Customer Service Protocol -->
+            <div class="section" id="section6">
+                <h2 class="section-title">
+                    <i class="fas fa-headset"></i>
+                    Customer Service Protocol
+                </h2>
+                <div class="protocol-cards">
+                    <div class="protocol-card avoid">
+                        <div class="protocol-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <h3 class="protocol-title">AVOID</h3>
+                        <p class="protocol-description">
+                            Asking questions on <span class="highlight-red">WhatsApp group</span>
+                        </p>
+                    </div>
+                    
+                    <div class="protocol-card instead">
+                        <div class="protocol-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h3 class="protocol-title">INSTEAD</h3>
+                        <p class="protocol-description">
+                            Find <span class="highlight-green">ENB Customer Service</span> team to assist for any issues
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="navigation">
+            <button class="nav-button prev" id="prevBtn" onclick="changeSection(-1)" disabled>
+                <i class="fas fa-arrow-left"></i>
+                Previous
+            </button>
+            
+            <div class="progress-indicator">
+                <div class="progress-dot active" id="dot1"></div>
+                <div class="progress-dot" id="dot2"></div>
+                <div class="progress-dot" id="dot3"></div>
+                <div class="progress-dot" id="dot4"></div>
+                <div class="progress-dot" id="dot5"></div>
+                <div class="progress-dot" id="dot6"></div>
+            </div>
+            
+            <button class="nav-button next" id="nextBtn" onclick="changeSection(1)">
+                Next
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let currentSection = 1;
+        const totalSections = 6;
+        
+        function showSection(n) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show current section
+            document.getElementById(`section${n}`).classList.add('active');
+            
+            // Update progress dots
+            const dots = document.querySelectorAll('.progress-dot');
+            dots.forEach((dot, index) => {
+                if (index + 1 === n) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = (n === 1);
+            document.getElementById('nextBtn').disabled = (n === totalSections);
+        }
+        
+        function changeSection(direction) {
+            currentSection += direction;
+            if (currentSection < 1) currentSection = 1;
+            if (currentSection > totalSections) currentSection = totalSections;
+            
+            showSection(currentSection);
+        }
+    </script>
+</body>
+</html>
