@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ENB Trade-In Process</title>
+    <title>ENB Trade-In Process with Remobie</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <style>
@@ -412,6 +412,145 @@
         .click-prompt i {
             margin-right: 10px;
         }
+        .nav-controls {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+        .nav-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1a365d 0%, #2a4365 100%);
+            color: white;
+            border: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(26, 54, 93, 0.3);
+            transition: all 0.3s ease;
+        }
+        .nav-btn:hover {
+            transform: scale(1.1);
+        }
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .nav-btn:disabled:hover {
+            transform: none;
+        }
+        .remobie-section {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-left: 6px solid #0ea5e9;
+        }
+        .remobie-section .section-icon {
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+        }
+        .remobie-section .section-title {
+            color: #0284c7;
+        }
+        .remobie-feature {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        .remobie-feature:hover {
+            transform: translateX(10px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        .remobie-feature-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        .remobie-feature-icon i {
+            font-size: 20px;
+            color: white;
+        }
+        .remobie-feature-content {
+            flex-grow: 1;
+        }
+        .remobie-feature-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #0284c7;
+            margin-bottom: 5px;
+        }
+        .remobie-feature-text {
+            font-size: 1rem;
+            color: #64748b;
+            line-height: 1.5;
+        }
+        .remobie-offer {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .remobie-offer-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #0284c7;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .remobie-offer-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .remobie-offer-item {
+            flex: 1;
+            min-width: 200px;
+            background: #f0f9ff;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+        .remobie-offer-item-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 10px;
+        }
+        .remobie-offer-item-icon i {
+            font-size: 18px;
+            color: white;
+        }
+        .remobie-offer-item-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #0284c7;
+            margin-bottom: 5px;
+        }
+        .remobie-offer-item-text {
+            font-size: 0.9rem;
+            color: #64748b;
+        }
         @keyframes fadeInDown {
             from {
                 opacity: 0;
@@ -442,6 +581,16 @@
                 transform: translateX(0);
             }
         }
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
         @keyframes pulse {
             0% {
                 transform: scale(1);
@@ -463,10 +612,9 @@
         <header class="header">
             <div class="header-content">
                 <h1 class="title" id="main-title">ENB Trade-In Process</h1>
-                <p class="subtitle" id="main-subtitle">Guidelines & Procedures Present By Danial </p>
+                <p class="subtitle" id="main-subtitle">Guidelines & Procedures Present By Danial</p>
             </div>
         </header>
-
         <main class="main-content">
             <!-- Section 1: Main Process Steps -->
             <section class="section" id="section1">
@@ -500,7 +648,6 @@
                     </div>
                 </div>
             </section>
-
             <!-- Section 2: Payment Plan Guidelines -->
             <section class="section" id="section2">
                 <div class="section-header">
@@ -526,7 +673,6 @@
                     </div>
                 </div>
             </section>
-
             <!-- Section 3: Front Screen Photo Protocol -->
             <section class="section" id="section3">
                 <div class="section-header">
@@ -566,7 +712,6 @@
                     </div>
                 </div>
             </section>
-
             <!-- Section 4: Internal & Physical Check -->
             <section class="section" id="section4">
                 <div class="section-header">
@@ -614,7 +759,6 @@
                     <p class="warning-text">If clicked YES for any of these features, automatically will be rejected</p>
                 </div>
             </section>
-
             <!-- Section 5: Additional Checks -->
             <section class="section" id="section5">
                 <div class="section-header">
@@ -646,7 +790,6 @@
                     <p class="note-text"><span class="highlight">Bloated battery</span> can be accepted</p>
                 </div>
             </section>
-
             <!-- Section 6: Customer Service Protocol -->
             <section class="section" id="section6">
                 <div class="section-header">
@@ -672,18 +815,94 @@
                     </div>
                 </div>
             </section>
+            <!-- Section 7: Remobie Section -->
+            <section class="section remobie-section" id="section7">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-hand-holding-usd"></i>
+                    </div>
+                    <h2 class="section-title">Cash Back on Your Trade-in with Remobie</h2>
+                </div>
+                <div class="remobie-feature" id="remobie-feature-1">
+                    <div class="remobie-feature-icon">
+                        <i class="fas fa-quote-right"></i>
+                    </div>
+                    <div class="remobie-feature-content">
+                        <h3 class="remobie-feature-title">Get a Quote/Price to Customer</h3>
+                        <p class="remobie-feature-text">Provide initial valuation based on device information</p>
+                    </div>
+                </div>
+                <div class="remobie-feature" id="remobie-feature-2">
+                    <div class="remobie-feature-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <div class="remobie-feature-content">
+                        <h3 class="remobie-feature-title">Take Home Device for Up to 3 Days</h3>
+                        <p class="remobie-feature-text">Customer can bring their phone home to back up or transfer data</p>
+                    </div>
+                </div>
+                <div class="remobie-feature" id="remobie-feature-3">
+                    <div class="remobie-feature-icon">
+                        <i class="fas fa-undo"></i>
+                    </div>
+                    <div class="remobie-feature-content">
+                        <h3 class="remobie-feature-title">Return to Get Cash Back</h3>
+                        <p class="remobie-feature-text">Customer returns device to receive their cash back</p>
+                    </div>
+                </div>
+                <div class="remobie-feature" id="remobie-feature-4">
+                    <div class="remobie-feature-icon">
+                        <i class="fas fa-money-check-alt"></i>
+                    </div>
+                    <div class="remobie-feature-content">
+                        <h3 class="remobie-feature-title">Fast Transfer to Account</h3>
+                        <p class="remobie-feature-text">Customer amount will be transferred to their account within 14 days</p>
+                    </div>
+                </div>
+                <div class="remobie-offer" id="remobie-offer">
+                    <h3 class="remobie-offer-title">What Remobie Offers During NPI Season</h3>
+                    <div class="remobie-offer-items">
+                        <div class="remobie-offer-item">
+                            <div class="remobie-offer-item-icon">
+                                <i class="fas fa-exchange-alt"></i>
+                            </div>
+                            <h4 class="remobie-offer-item-title">Overtrade</h4>
+                            <p class="remobie-offer-item-text">Up to RM300</p>
+                        </div>
+                        <div class="remobie-offer-item">
+                            <div class="remobie-offer-item-icon">
+                                <i class="fas fa-exchange-alt"></i>
+                            </div>
+                            <h4 class="remobie-offer-item-title">Direct Transfer</h4>
+                            <p class="remobie-offer-item-text">Bring home trade-in device for data transfer</p>
+                        </div>
+                        <div class="remobie-offer-item">
+                            <div class="remobie-offer-item-icon">
+                                <i class="fas fa-exchange-alt"></i>
+                            </div>
+                            <h4 class="remobie-offer-item-title">Pre Trade-In</h4>
+                            <p class="remobie-offer-item-text">Diagnostic on old device during preorder, price locked up to 21 days</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </main>
-
         <footer class="footer">
             <p>ENB/Remobie Trade-In Process Presentation by Danial Danish</p>
         </footer>
-
         <div class="click-prompt" id="click-prompt">
             <i class="fas fa-mouse-pointer"></i>
             <span>Click anywhere to continue</span>
         </div>
+        <div class="nav-controls">
+            <button class="nav-btn" id="prev-btn" disabled>
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="nav-btn" id="next-btn">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
     </div>
-
     <script>
         // Array of elements to show in order
         const elementsToShow = [
@@ -714,12 +933,16 @@
             { id: 'note-1', animation: 'slideInRight' },
             { id: 'section6', animation: 'fadeInUp' },
             { id: 'cs-1', animation: 'fadeInUp' },
-            { id: 'cs-2', animation: 'fadeInUp' }
+            { id: 'cs-2', animation: 'fadeInUp' },
+            { id: 'section7', animation: 'fadeInUp' },
+            { id: 'remobie-feature-1', animation: 'slideInLeft' },
+            { id: 'remobie-feature-2', animation: 'slideInLeft' },
+            { id: 'remobie-feature-3', animation: 'slideInLeft' },
+            { id: 'remobie-feature-4', animation: 'slideInLeft' },
+            { id: 'remobie-offer', animation: 'fadeInUp' }
         ];
-
         let currentElementIndex = 0;
         let isAnimating = false;
-
         // Function to show the next element
         function showNextElement() {
             if (isAnimating || currentElementIndex >= elementsToShow.length) return;
@@ -738,6 +961,7 @@
                 setTimeout(() => {
                     currentElementIndex++;
                     isAnimating = false;
+                    updateNavigationButtons();
                     
                     // Hide the prompt if we've shown all elements
                     if (currentElementIndex >= elementsToShow.length) {
@@ -747,12 +971,53 @@
             } else {
                 currentElementIndex++;
                 isAnimating = false;
+                updateNavigationButtons();
             }
         }
-
-        // Add click event listener to the document
+        // Function to show the previous element
+        function showPreviousElement() {
+            if (isAnimating || currentElementIndex <= 0) return;
+            
+            isAnimating = true;
+            currentElementIndex--;
+            const element = elementsToShow[currentElementIndex];
+            const domElement = document.getElementById(element.id);
+            
+            if (domElement) {
+                // Remove animation and reset opacity
+                domElement.style.animation = 'none';
+                domElement.style.opacity = '0';
+                
+                // Force reflow
+                void domElement.offsetWidth;
+                
+                // Add animation class
+                domElement.style.animation = `${element.animation} 0.6s ease forwards`;
+                
+                setTimeout(() => {
+                    isAnimating = false;
+                    updateNavigationButtons();
+                    
+                    // Show the prompt if we're not at the end
+                    document.getElementById('click-prompt').classList.remove('hidden');
+                }, 600);
+            } else {
+                isAnimating = false;
+                updateNavigationButtons();
+            }
+        }
+        // Function to update navigation buttons
+        function updateNavigationButtons() {
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            
+            prevBtn.disabled = currentElementIndex <= 0;
+            nextBtn.disabled = currentElementIndex >= elementsToShow.length;
+        }
+        // Add click event listeners
         document.addEventListener('click', showNextElement);
-
+        document.getElementById('next-btn').addEventListener('click', showNextElement);
+        document.getElementById('prev-btn').addEventListener('click', showPreviousElement);
         // Add hover effect to section headers
         document.querySelectorAll('.section-header').forEach(header => {
             header.addEventListener('mouseenter', function() {
