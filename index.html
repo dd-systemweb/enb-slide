@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ENB/Remobie Trade-In Process</title>
+    <title>ENB Trade-In Process with Remobie</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <style>
@@ -22,6 +22,7 @@
             width: 100%;
             min-height: 100vh;
             position: relative;
+            perspective: 1000px;
         }
         .header {
             background: linear-gradient(135deg, #1a365d 0%, #2a4365 100%);
@@ -79,6 +80,8 @@
             overflow: hidden;
             opacity: 0;
             transform: translateY(30px);
+            transform-style: preserve-3d;
+            transition: transform 0.6s ease, opacity 0.6s ease;
         }
         .section::before {
             content: "";
@@ -135,9 +138,10 @@
             transition: all 0.3s ease;
             opacity: 0;
             transform: translateY(20px);
+            transform-style: preserve-3d;
         }
         .card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-5px) rotateX(5deg);
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
         .card-icon {
@@ -173,6 +177,7 @@
             align-items: center;
             opacity: 0;
             transform: translateX(-20px);
+            transform-style: preserve-3d;
         }
         .note-icon {
             margin-right: 15px;
@@ -218,9 +223,10 @@
             transition: all 0.3s ease;
             opacity: 0;
             transform: scale(0.9);
+            transform-style: preserve-3d;
         }
         .feature:hover {
-            transform: translateY(-5px);
+            transform: translateY(-5px) rotateY(5deg);
             box-shadow: 0 8px 20px rgba(0,0,0,0.1);
         }
         .feature-icon {
@@ -252,6 +258,7 @@
             align-items: center;
             opacity: 0;
             transform: translateY(20px);
+            transform-style: preserve-3d;
         }
         .warning-icon {
             color: #ef4444;
@@ -277,9 +284,10 @@
             transition: all 0.3s ease;
             opacity: 0;
             transform: translateY(20px);
+            transform-style: preserve-3d;
         }
         .protocol-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-5px) rotateX(5deg);
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
         .protocol-icon {
@@ -349,9 +357,10 @@
             text-align: center;
             opacity: 0;
             transform: translateY(20px);
+            transform-style: preserve-3d;
         }
         .comparison-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-5px) rotateY(5deg);
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
         .comparison-card.rejected {
@@ -433,9 +442,10 @@
             cursor: pointer;
             box-shadow: 0 5px 15px rgba(26, 54, 93, 0.3);
             transition: all 0.3s ease;
+            transform-style: preserve-3d;
         }
         .nav-btn:hover {
-            transform: scale(1.1);
+            transform: scale(1.1) rotateY(10deg);
         }
         .nav-btn:disabled {
             opacity: 0.5;
@@ -464,9 +474,10 @@
             align-items: center;
             opacity: 0;
             transform: translateX(-20px);
+            transform-style: preserve-3d;
         }
         .remobie-feature:hover {
-            transform: translateX(10px);
+            transform: translateX(10px) rotateY(5deg);
             box-shadow: 0 8px 20px rgba(0,0,0,0.1);
         }
         .remobie-feature-icon {
@@ -506,6 +517,7 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             opacity: 0;
             transform: translateY(20px);
+            transform-style: preserve-3d;
         }
         .remobie-offer-title {
             font-size: 1.3rem;
@@ -526,6 +538,12 @@
             border-radius: 10px;
             padding: 15px;
             text-align: center;
+            transform-style: preserve-3d;
+            transition: all 0.3s ease;
+        }
+        .remobie-offer-item:hover {
+            transform: translateY(-5px) rotateX(5deg);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
         }
         .remobie-offer-item-icon {
             width: 40px;
@@ -554,41 +572,41 @@
         @keyframes fadeInDown {
             from {
                 opacity: 0;
-                transform: translateY(-30px);
+                transform: translateY(-30px) rotateX(-20deg);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) rotateX(0);
             }
         }
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(20px) rotateX(20deg);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) rotateX(0);
             }
         }
         @keyframes slideInRight {
             from {
                 opacity: 0;
-                transform: translateX(-20px);
+                transform: translateX(-20px) rotateY(-20deg);
             }
             to {
                 opacity: 1;
-                transform: translateX(0);
+                transform: translateX(0) rotateY(0);
             }
         }
         @keyframes slideInLeft {
             from {
                 opacity: 0;
-                transform: translateX(20px);
+                transform: translateX(20px) rotateY(20deg);
             }
             to {
                 opacity: 1;
-                transform: translateX(0);
+                transform: translateX(0) rotateY(0);
             }
         }
         @keyframes pulse {
@@ -602,8 +620,31 @@
                 transform: scale(1);
             }
         }
+        @keyframes flipIn {
+            from {
+                opacity: 0;
+                transform: rotateY(90deg);
+            }
+            to {
+                opacity: 1;
+                transform: rotateY(0);
+            }
+        }
+        @keyframes flipOut {
+            from {
+                opacity: 1;
+                transform: rotateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: rotateY(-90deg);
+            }
+        }
         .hidden {
             display: none;
+        }
+        .visible {
+            opacity: 1;
         }
     </style>
 </head>
@@ -943,6 +984,8 @@
         ];
         let currentElementIndex = 0;
         let isAnimating = false;
+        let visibleElements = new Set();
+        
         // Function to show the next element
         function showNextElement() {
             if (isAnimating || currentElementIndex >= elementsToShow.length) return;
@@ -953,7 +996,8 @@
             
             if (domElement) {
                 // Add animation class
-                domElement.style.animation = `${element.animation} 0.6s ease forwards`;
+                domElement.style.animation = `${element.animation} 0.8s ease forwards`;
+                visibleElements.add(element.id);
                 
                 // If there's a delay, wait before showing the next element
                 const delay = element.delay || 0;
@@ -967,45 +1011,40 @@
                     if (currentElementIndex >= elementsToShow.length) {
                         document.getElementById('click-prompt').classList.add('hidden');
                     }
-                }, 600 + delay);
+                }, 800 + delay);
             } else {
                 currentElementIndex++;
                 isAnimating = false;
                 updateNavigationButtons();
             }
         }
+        
         // Function to show the previous element
         function showPreviousElement() {
             if (isAnimating || currentElementIndex <= 0) return;
             
             isAnimating = true;
             currentElementIndex--;
-            const element = elementsToShow[currentElementIndex];
-            const domElement = document.getElementById(element.id);
             
-            if (domElement) {
-                // Remove animation and reset opacity
-                domElement.style.animation = 'none';
-                domElement.style.opacity = '0';
-                
-                // Force reflow
-                void domElement.offsetWidth;
-                
-                // Add animation class
-                domElement.style.animation = `${element.animation} 0.6s ease forwards`;
-                
-                setTimeout(() => {
-                    isAnimating = false;
-                    updateNavigationButtons();
-                    
-                    // Show the prompt if we're not at the end
-                    document.getElementById('click-prompt').classList.remove('hidden');
-                }, 600);
-            } else {
+            // Hide the last visible element
+            const lastElement = elementsToShow[currentElementIndex + 1];
+            if (lastElement) {
+                const lastDomElement = document.getElementById(lastElement.id);
+                if (lastDomElement && visibleElements.has(lastElement.id)) {
+                    lastDomElement.style.animation = 'flipOut 0.5s ease forwards';
+                    visibleElements.delete(lastElement.id);
+                }
+            }
+            
+            setTimeout(() => {
                 isAnimating = false;
                 updateNavigationButtons();
-            }
+                
+                // Show the prompt if we're not at the end
+                document.getElementById('click-prompt').classList.remove('hidden');
+            }, 500);
         }
+        
         // Function to update navigation buttons
         function updateNavigationButtons() {
             const prevBtn = document.getElementById('prev-btn');
@@ -1014,18 +1053,20 @@
             prevBtn.disabled = currentElementIndex <= 0;
             nextBtn.disabled = currentElementIndex >= elementsToShow.length;
         }
+        
         // Add click event listeners
         document.addEventListener('click', showNextElement);
         document.getElementById('next-btn').addEventListener('click', showNextElement);
         document.getElementById('prev-btn').addEventListener('click', showPreviousElement);
+        
         // Add hover effect to section headers
         document.querySelectorAll('.section-header').forEach(header => {
             header.addEventListener('mouseenter', function() {
-                this.querySelector('.section-icon').style.transform = 'scale(1.1)';
+                this.querySelector('.section-icon').style.transform = 'scale(1.1) rotateY(10deg)';
             });
             
             header.addEventListener('mouseleave', function() {
-                this.querySelector('.section-icon').style.transform = 'scale(1)';
+                this.querySelector('.section-icon').style.transform = 'scale(1) rotateY(0)';
             });
         });
     </script>
